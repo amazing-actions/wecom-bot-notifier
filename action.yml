@@ -1,0 +1,22 @@
+name: 'Selected Collaborators'
+description: 'A GitHub Action that selects a number of repository collaborators at random from your repository collaborators list.'
+author: 'akinocccc'
+inputs:
+  token:
+    required: true
+    description: 'Your Github Token for getting permission'
+    default: ''
+  limit_number:
+    required: false
+    description: 'The number of the result'
+    default: 1
+  sparator: 
+    required: false
+    default: ','
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
+
+branding:
+  icon: 'thumbs-up'
+  color: 'green'
