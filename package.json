@@ -1,15 +1,14 @@
 {
-  "name": "github-action-starter",
+  "name": "wecom-bot-notify",
   "version": "0.0.0",
   "private": true,
   "description": "",
-  "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
     "format": "prettier --write '**/*.ts'",
     "format-check": "prettier --check '**/*.ts'",
     "lint": "eslint src/**/*.ts",
-    "package": "ncc build --source-map --license licenses.txt",
+    "package": "ncc build src/main.ts -o dist --source-map --license licenses.txt",
     "prepare": "husky install",
     "release": "standard-version",
     "all": "npm run build && npm run format && npm run lint && npm run package"
@@ -29,8 +28,10 @@
     "provenance": true
   },
   "dependencies": {
-    "@actions/core": "^1.10.0",
-    "@actions/github": "^5.1.1"
+    "@actions/core": "^1.10.1",
+    "@actions/github": "^6.0.0",
+    "axios": "^1.7.2",
+    "js-base64": "^3.7.7"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.3",
