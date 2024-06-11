@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/amazing-actions/github-action-starters.git"
+    "url": "git+https://github.com/amazing-actions/wecom-bot-notify.git"
   },
   "keywords": [
     "actions",
