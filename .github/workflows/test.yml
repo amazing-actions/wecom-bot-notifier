@@ -24,7 +24,7 @@ jobs:
         with:
           type: markdown
           content: '## Test \n\n **Test message**'
-          key: 'test'
+          key: ${{ secrets.TEST_KEY }}
       
       - name: Print output    
         run: |

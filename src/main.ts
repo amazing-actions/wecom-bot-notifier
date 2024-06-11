@@ -62,7 +62,7 @@ async function sendMessageToWeComBot(
   try {
     const res = await axios.post(url, payload)
     core.info('Message sent to WeCom Bot successfully.')
-    core.setOutput('res', res)
+    core.setOutput('res', res.data?.message)
   } catch (error: any) {
     core.setOutput('error', error)
     core.error(`Failed to send message to WeCom Bot: ${error.message}`)
