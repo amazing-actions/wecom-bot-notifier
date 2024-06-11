@@ -1,20 +1,16 @@
-name: 'Selected Collaborators'
-description: 'A GitHub Action that selects a number of repository collaborators at random from your repository collaborators list.'
+name: 'wecom-bot-notify'
+description: 'A GitHub Action that sends message to wecom bot'
 author: 'akinocccc'
 inputs:
-  token:
+  type:
     required: true
-    description: 'Your Github Token for getting permission'
+    description: 'Message type'
     default: ''
-  limit_number:
-    required: false
-    description: 'The number of the result'
-    default: 1
-  sparator: 
-    required: false
-    default: ','
+  message:
+    required: true
+    description: 'Message content'
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'dist/index.js'
 
 branding:
