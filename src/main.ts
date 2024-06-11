@@ -59,15 +59,15 @@ async function sendMessageToWeComBot(botKey: string, type: MessageTypeValue, mes
 
 async function run() {
     try {
-        const wxWorkBotKey = core.getInput('bot-key', { required: true });
+        const wxWorkBotKey = core.getInput('key', { required: true });
         if (!validateBotKey(wxWorkBotKey)) {
-            core.setFailed('Invalid or missing bot-key.');
+            core.setFailed('Invalid or missing wecom bot hook key.');
             return;
         }
 
         // 获取消息内容和消息类型
-        const messageContent = core.getInput('message', { required: false }) || 'Hello from GitHub Actions!';
-        const messageType = core.getInput('type', { required: false }) as MessageTypeValue;
+        const messageContent = core.getInput('content', { required: true });
+        const messageType = core.getInput('type', { required: true }) as MessageTypeValue;
         
         // 验证消息类型
         if (!['text', 'markdown', 'image', 'news'].includes(messageType)) {

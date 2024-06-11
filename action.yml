@@ -2,13 +2,13 @@ name: 'wecom-bot-notify'
 description: 'A GitHub Action that sends message to wecom bot'
 author: 'akinocccc'
 inputs:
-  bot-key: 
+  key: 
     required: true
     description: 'WeCom bot hook key'
   type:
     required: true
     description: 'Message type'
-  message:
+  content:
     required: true
     description: 'Message content'
 runs:

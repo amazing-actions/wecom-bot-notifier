@@ -23,7 +23,7 @@ jobs:
         id: notify
         with:
           type: markdown
-          message: '## Test \n\n **Test message**'
+          content: '## Test \n\n **Test message**'
           key: 'test'
       
       - name: Print output    
