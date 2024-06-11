@@ -41,13 +41,18 @@ async function sendMessageToWeComBot(botKey: string, type: MessageTypeValue, mes
             payload = { msgtype: 'template_card', template_card: JSON.parse(message) }; // https://developer.work.weixin.qq.com/document/path/91770#图文展示模版卡片
             break;
         default:
-            throw new Error('Unsupported message type');
+            core.error('Unsupported message type')
     }
 
+    core.setOutput('type', type);
+    core.setOutput('message', message);
+
     try {
-        await axios.post(url, payload);
+        const res = await axios.post(url, payload);
         core.info('Message sent to WeCom Bot successfully.');
+        core.setOutput('res', res);
     } catch (error: any) {
+        core.setOutput('error', error);
         core.error(`Failed to send message to WeCom Bot: ${error.message}`);
     }
 }
@@ -62,7 +67,7 @@ async function run() {
 
         // 获取消息内容和消息类型
         const messageContent = core.getInput('message', { required: false }) || 'Hello from GitHub Actions!';
-        const messageType = core.getInput('message-type', { required: false }) as MessageTypeValue;
+        const messageType = core.getInput('type', { required: false }) as MessageTypeValue;
         
         // 验证消息类型
         if (!['text', 'markdown', 'image', 'news'].includes(messageType)) {

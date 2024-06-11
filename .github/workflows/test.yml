@@ -20,13 +20,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./
-        id: collaborators
+        id: notify
         with:
-          token: ${{ secrets.TEST_TOKEN }}
+          type: markdown
+          message: '## Test \n\n **Test message**'
+          key: 'test'
       
       - name: Print output    
         run: |
-          echo "candidates: ${{ steps.collaborators.outputs['candidates'] }}"
-          echo "candidates_string: ${{ steps.collaborators.outputs['candidates_string'] }}"
-          echo "at_candidates_string: ${{ steps.collaborators.outputs['at_candidates_string'] }}"
-          echo "collaborators: ${{ steps.collaborators.outputs['collaborators'] }}"
+          echo "candidates: ${{ steps.notify.outputs['type'] }}"
+          echo "candidates: ${{ steps.notify.outputs['message'] }}"
+          echo "candidates: ${{ steps.notify.outputs['res'] }}"
+          echo "candidates: ${{ steps.notify.outputs['error'] }}"
