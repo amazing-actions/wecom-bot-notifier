@@ -56,6 +56,7 @@ async function sendMessageToWeComBot(
     default:
       core.error('Unsupported message type')
   }
+  core.info(`${MessageType.MARKDOWN} ${type} ${payload}`)
 
   try {
     await axios.post(url, payload)
