@@ -52,6 +52,7 @@ async function sendMessageToWeComBot(botKey, type, message) {
             break;
         case MessageType.MARKDOWN:
             payload = { msgtype: 'markdown', markdown: { content: message } };
+            core.debug(`payload: ${payload}`);
             break;
         case MessageType.IMAGE:
             // message should be base64 encoded image
@@ -69,47 +70,39 @@ async function sendMessageToWeComBot(botKey, type, message) {
         default:
             core.error('Unsupported message type');
     }
-    core.setOutput('type', type);
-    core.setOutput('message', message);
     try {
-        const res = await axios_1.default.post(url, payload);
+        await axios_1.default.post(url, payload);
         core.info('Message sent to WeCom Bot successfully.');
-        core.setOutput('res', res);
     }
     catch (error) {
-        core.setOutput('error', error);
         core.error(`Failed to send message to WeCom Bot: ${error.message}`);
+        throw error;
     }
 }
 async function run() {
-    try {
-        const wxWorkBotKey = core.getInput('key', { required: true });
-        if (!validateBotKey(wxWorkBotKey)) {
-            core.setFailed('Invalid or missing wecom bot hook key.');
-            return;
-        }
-        // 获取消息内容和消息类型
-        const msgContent = core.getInput('content', { required: true });
-        const msgType = core.getInput('type', {
-            required: true
-        });
-        // 验证消息类型
-        if (![
-            MessageType.TEXT,
-            MessageType.IMAGE,
-            MessageType.MARKDOWN,
-            MessageType.NEWS,
-            MessageType.TEMPLATE_CARD
-        ].includes(msgType)) {
-            core.setFailed('Invalid message type. Allowed types are "text", "markdown", "image", and "news".');
-            return;
-        }
-        // 发送消息
-        await sendMessageToWeComBot(wxWorkBotKey, msgType, msgContent);
+    const wxWorkBotKey = core.getInput('key', { required: true });
+    if (!validateBotKey(wxWorkBotKey)) {
+        core.setFailed('Invalid or missing wecom bot hook key.');
+        return;
     }
-    catch (error) {
-        core.setFailed(`An unexpected error occurred: ${error.message}`);
+    // 获取消息内容和消息类型
+    const msgContent = core.getInput('content', { required: true });
+    const msgType = core.getInput('type', {
+        required: true
+    });
+    // 验证消息类型
+    if (![
+        MessageType.TEXT,
+        MessageType.IMAGE,
+        MessageType.MARKDOWN,
+        MessageType.NEWS,
+        MessageType.TEMPLATE_CARD
+    ].includes(msgType)) {
+        core.setFailed('Invalid message type. Allowed types are "text", "markdown", "image", and "news".');
+        return;
     }
+    // 发送消息
+    await sendMessageToWeComBot(wxWorkBotKey, msgType, msgContent);
 }
 run();
 //# sourceMappingURL=main.js.map
