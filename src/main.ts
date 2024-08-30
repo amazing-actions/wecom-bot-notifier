@@ -38,6 +38,7 @@ async function sendMessageToWeComBot(
       break
     case MessageType.MARKDOWN:
       payload = {msgtype: 'markdown', markdown: {content: message}}
+      core.debug(`payload: ${payload}`)
       break
     case MessageType.IMAGE:
       // message should be base64 encoded image
@@ -66,40 +67,36 @@ async function sendMessageToWeComBot(
 }
 
 async function run() {
-  try {
-    const wxWorkBotKey = core.getInput('key', {required: true})
-    if (!validateBotKey(wxWorkBotKey)) {
-      core.setFailed('Invalid or missing wecom bot hook key.')
-      return
-    }
-
-    // 获取消息内容和消息类型
-    const msgContent = core.getInput('content', {required: true})
-    const msgType = core.getInput('type', {
-      required: true
-    }) as MessageTypeValue
-
-    // 验证消息类型
-    if (
-      ![
-        MessageType.TEXT,
-        MessageType.IMAGE,
-        MessageType.MARKDOWN,
-        MessageType.NEWS,
-        MessageType.TEMPLATE_CARD
-      ].includes(msgType)
-    ) {
-      core.setFailed(
-        'Invalid message type. Allowed types are "text", "markdown", "image", and "news".'
-      )
-      return
-    }
-
-    // 发送消息
-    await sendMessageToWeComBot(wxWorkBotKey, msgType, msgContent)
-  } catch (error: any) {
-    core.setFailed(`An unexpected error occurred: ${error.message}`)
+  const wxWorkBotKey = core.getInput('key', {required: true})
+  if (!validateBotKey(wxWorkBotKey)) {
+    core.setFailed('Invalid or missing wecom bot hook key.')
+    return
   }
+
+  // 获取消息内容和消息类型
+  const msgContent = core.getInput('content', {required: true})
+  const msgType = core.getInput('type', {
+    required: true
+  }) as MessageTypeValue
+
+  // 验证消息类型
+  if (
+    ![
+      MessageType.TEXT,
+      MessageType.IMAGE,
+      MessageType.MARKDOWN,
+      MessageType.NEWS,
+      MessageType.TEMPLATE_CARD
+    ].includes(msgType)
+  ) {
+    core.setFailed(
+      'Invalid message type. Allowed types are "text", "markdown", "image", and "news".'
+    )
+    return
+  }
+
+  // 发送消息
+  await sendMessageToWeComBot(wxWorkBotKey, msgType, msgContent)
 }
 
 run()
