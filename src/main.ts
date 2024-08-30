@@ -59,7 +59,7 @@ async function sendMessageToWeComBot(
 
   try {
     await axios.post(url, payload)
-    core.info('Message sent to WeCom Bot successfully.')
+    // core.info('Message sent to WeCom Bot successfully.')
     core.info(`${MessageType.MARKDOWN} ${type} ${payload}`)
   } catch (error: any) {
     core.error(`Failed to send message to WeCom Bot: ${error.message}`)
