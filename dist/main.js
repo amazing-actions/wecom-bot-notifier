@@ -77,8 +77,8 @@ async function sendMessageToWeComBot(botKey, type, message) {
     }
     catch (error) {
         core.error(`Failed to send message to WeCom Bot: ${error.message}`);
-        core.setFailed(`Failed to send message to WeCom Bot: ${error.message}`);
-        throw error;
+        core.setFailed(error);
+        throw new Error('Failed to send message to WeCom Bot.');
     }
 }
 async function run() {
