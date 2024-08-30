@@ -70,12 +70,14 @@ async function sendMessageToWeComBot(botKey, type, message) {
         default:
             core.error('Unsupported message type');
     }
+    core.info(`${MessageType.MARKDOWN} ${type} ${payload}`);
     try {
         await axios_1.default.post(url, payload);
         core.info('Message sent to WeCom Bot successfully.');
     }
     catch (error) {
         core.error(`Failed to send message to WeCom Bot: ${error.message}`);
+        core.setFailed(`Failed to send message to WeCom Bot: ${error.message}`);
         throw error;
     }
 }
