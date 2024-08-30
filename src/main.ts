@@ -56,11 +56,11 @@ async function sendMessageToWeComBot(
     default:
       core.error('Unsupported message type')
   }
-  core.info(`${MessageType.MARKDOWN} ${type} ${payload}`)
 
   try {
     await axios.post(url, payload)
     core.info('Message sent to WeCom Bot successfully.')
+    core.info(`${MessageType.MARKDOWN} ${type} ${payload}`)
   } catch (error: any) {
     core.error(`Failed to send message to WeCom Bot: ${error.message}`)
     core.setFailed(error)
