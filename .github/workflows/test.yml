@@ -24,7 +24,7 @@ jobs:
         with:
           type: markdown
           content: '## Test \n\n **Test message**'
-          key: ${{ secrets.TEST_KEY }}
+          key: ${{ secrets.WECOM_BOT_KEY }}
       
       - name: Print output    
         run: |
