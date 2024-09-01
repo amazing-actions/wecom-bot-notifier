@@ -10,7 +10,7 @@ jobs:
   build: # make sure build/ci work properly
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@main
       - run: |
           npm install
       - run: |
@@ -19,17 +19,19 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@main
       - uses: ./
-        id: notify
         with:
-          type: markdown
-          content: '## Test \n\n **Test message**'
-          key: ${{ secrets.WECOM_BOT_KEY }}
+          type: markdown # text, markdown, image, news, template_card
+          key: ${{ secrets.WECOM_BOT_KEY }} # Your key of wecom bot hook
+          content: |
+            # Hello all, I will release ${{ github.event.repository.name }} ${{ github.workflow }}, please note that.
+            > ${{ github.event.head_commit.message }}
+            > pushed by ${{ github.event.head_commit.committer.name }}
       
       - name: Print output    
         run: |
-          echo "candidates: ${{ steps.notify.outputs['type'] }}"
-          echo "candidates: ${{ steps.notify.outputs['message'] }}"
-          echo "candidates: ${{ steps.notify.outputs['res'] }}"
-          echo "candidates: ${{ steps.notify.outputs['error'] }}"
+          echo "type: ${{ steps.notify.outputs['type'] }}"
+          echo "message: ${{ steps.notify.outputs['message'] }}"
+          echo "result: ${{ steps.notify.outputs['res'] }}"
+          echo "error: ${{ steps.notify.outputs['error'] }}"
